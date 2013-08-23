@@ -5,23 +5,17 @@ require 'httparty'
 
 before do
   $html ||= DATA.read
-  @html = $html.sub("__cookies__", request.cookies.to_json)
-  if remote_session_id = request.cookies["remote_session_id"]
-    @html.sub("__remote_session_data__", HTTParty.get("http://dev.session.com:9292/session/#{remote_session_id}").body)
-  else
-    @html.sub("__remote_session_data__", "")
-  end
 end
 
 get "/" do
-  @html
-end
-
-get "/query2session" do
+  html = $html.sub("__cookies__", request.cookies.to_json)
   if remote_session_id = request.cookies["remote_session_id"]
-    HTTParty.put("http://dev.session.com:9292/session/#{remote_session_id}", :body => params.to_json)
+    HTTParty.put("http://dev.session.com:9292/session/#{remote_session_id}", :body => params.to_json) unless params.empty?
+    html.sub!("__remote_session_data__", HTTParty.get("http://dev.session.com:9292/session/#{remote_session_id}").body)
+  else
+    html.sub!("__remote_session_data__", "")
   end
-  @html
+  html
 end
 
 __END__
@@ -43,7 +37,9 @@ __END__
   </script>
 </head>
 <body>
-  Cookies:<pre>__cookies__<pre>
-  RemoteSessionData:<pre>__remote_session_data__</pre>
+  <h1>Cookies</h1>
+  <pre>__cookies__</pre>
+  <h1>RemoteSessionData</h1>
+  <pre>__remote_session_data__</pre>
 </body>
 
