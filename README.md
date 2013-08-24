@@ -8,8 +8,8 @@
 
 ## Quick View
 
-* App1
+#### App1
 ![app1](http://i.imgur.com/4i5gLyU.jpg)
 
-* App2
+#### App2
 ![app2](http://i.imgur.com/D8w52Kp.jpg)
