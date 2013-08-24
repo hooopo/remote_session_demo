@@ -30,7 +30,10 @@ __END__
     });
 
     function set_session_id(result){
-      document.cookie = "remote_session_id=" + result.session_id;
+      if (! /remote_session_id=(.*?)/.test(document.cookie)){
+        document.cookie = "remote_session_id=" + result.session_id;
+        window.location.reload(true);
+      }
     }
 
     //]]>
