@@ -32,7 +32,7 @@ __END__
     function set_session_id(result){
       if (! /remote_session_id=(.*?)/.test(document.cookie)){
         document.cookie = "remote_session_id=" + result.session_id;
-        window.location.reload(true);
+        window.location.reload(true); // Partial update is best way, but this is only a demo, reload is an easy way!
       }
     }
 
