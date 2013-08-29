@@ -23,10 +23,10 @@ __END__
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script type="text/javascript">
     //<![CDATA[
-      $.ajax({
+      $.ajax({    // JSONP request, NOT Ajax request, it is JQuery's magic.
       url: 'http://dev.session.com:9292/generate_session_id?callback=set_session_id',
       dataType: "script",
-      cache: true
+      cache: true // Avoid JQuery adding timestamps in the query string. Different url, different Etag.  
     });
 
     function set_session_id(result){
